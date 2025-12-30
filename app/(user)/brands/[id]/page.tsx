@@ -16,10 +16,12 @@ export default function BrandsPage() {
     const fetchBrands = async () => {
       try {
         setLoading(true)
-        const brands = await getBrands()
+        const response = await getBrands()
         if (!mounted) return
 
-        setBrands(brands)
+
+        const brandsData = Array.isArray(response) ? response : (response as any).data || []
+        setBrands(brandsData)
       } catch (err) {
         if (!mounted) return
         setError('Failed to load brands.')
