@@ -20,7 +20,7 @@ export default function BrandsPage() {
         if (!mounted) return
 
 
-        const brandsData = Array.isArray(response) ? response : (response as any).data || []
+const brandsData = Array.isArray(response) ? response : (response as any)?.data || []
         setBrands(brandsData)
       } catch (err) {
         if (!mounted) return
