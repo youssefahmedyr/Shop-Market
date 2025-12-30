@@ -25,7 +25,7 @@ export default function BrandDetails() {
         const brandData = await getBrandById(id)
         if (!mounted) return
         setBrand(brandData)
-      } catch (e) {
+      } catch (err) {
         if (!mounted) return
         setError('Failed to load brand details.')
       } finally {
