@@ -5,6 +5,7 @@ export type Product = {
   id: string
   _id: string
   title: string
+  name?: string
   slug: string
   description: string
   price: number
@@ -49,6 +50,7 @@ export const transformProduct = (
   return {
     ...apiProduct,
     id: apiProduct._id,
+    name: apiProduct.name || apiProduct.title,
     colors: apiProduct.availableColors?.map((ac) => ac.color) || [],
     ratingsAverage: apiProduct.ratingsAverage || 0,
     ratingsQuantity: apiProduct.ratingsQuantity || 0
