@@ -144,6 +144,7 @@ export async function getProductById(id: string): Promise<GlobalProduct> {
 
   try {
     const res = await api.get<{data: Product}>(`/products/${id}`)
+
     return transformProduct(res.data.data)
   } catch (error) {
     throw error
