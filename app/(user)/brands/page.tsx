@@ -15,9 +15,10 @@ export default function Brands() {
     let mounted = true
     const fetchBrands = async () => {
       try {
-        const data = await getBrands()
+        const response = await getBrands()
         if (!mounted) return
-        setBrands(data.data || [])
+        const brandsData = Array.isArray(response) ? response : (response as any)?.data || []
+        setBrands(brandsData)
       } catch (err) {
         if (!mounted) return
         setError('An error occurred while loading brands. Please try again later.')
@@ -34,7 +35,6 @@ export default function Brands() {
     <main className="min-h-screen bg-[#FBFBFD] py-20 px-4 sm:px-8">
       <div className="max-w-[1200px] mx-auto">
         
-
         <header className="mb-16 space-y-4 animate-in fade-in slide-in-from-top-4 duration-1000">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-500 text-[10px] font-black uppercase tracking-[0.2em]">
             <FiGrid /> Our Partners
@@ -64,7 +64,6 @@ export default function Brands() {
                   href={`/brands/${brand._id}`}
                   className="group relative flex flex-col items-center text-center"
                 >
-                  {/* Card Container - Apple Glass Style */}
                   <div className="relative aspect-square w-full rounded-[2.5rem] bg-white border border-slate-100 transition-all duration-700 ease-[cubic-bezier(0.25,0.1,0.25,1)] group-hover:shadow-[0_20px_50px_rgba(0,0,0,0.06)] group-hover:-translate-y-2 overflow-hidden flex items-center justify-center p-8">
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,1),rgba(242,242,247,0.5))] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                     <img
@@ -74,7 +73,6 @@ export default function Brands() {
                     />
                   </div>
 
-                  {/* Content Label */}
                   <div className="mt-6 space-y-1">
                     <h2 className="text-lg font-bold tracking-tight text-[#1D1D1F] transition-colors duration-300 group-hover:text-rose-500">
                       {brand.name}
