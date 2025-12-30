@@ -19,8 +19,7 @@ export default function BrandsPage() {
         const response = await getBrands()
         if (!mounted) return
 
-
-const brandsData = Array.isArray(response) ? response : (response as any)?.data || []
+        const brandsData = Array.isArray(response) ? response : (response as any)?.data || []
         setBrands(brandsData)
       } catch (err) {
         if (!mounted) return
