@@ -1,0 +1,69 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 404
+
+[context.production]
+  command = "npm run build"
+
+[context.deploy-preview]
+  command = "npm run build"
+
+[context.branch-deploy]
+  command = "npm run build"
+
+# Environment variables (these should be set in Netlify dashboard)
+[context.production.environment]
+  NEXTAUTH_URL = "https://needful0.netlify.app/"
+  NEXTAUTH_SECRET = "@nextauth_secret"
+  NETLIFY_DATABASE_URL = "@database_url"
+  NETLIFY_DATABASE_URL_UNPOOLED = "@database_url_unpooled"
+
+[context.deploy-preview.environment]
+  NEXTAUTH_URL = "https://needful0.netlify.app/"
+  NEXTAUTH_SECRET = "@nextauth_secret_preview"
+
+[context.branch-deploy.environment]
+  NEXTAUTH_URL = "https://needful0.netlify.app/"
+  NEXTAUTH_SECRET = "@nextauth_secret_branch"
+
+# Headers for security and performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/_next/image/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Functions configuration
+[functions]
+  node_modules = "node_modules"
+
+# Edge functions for better performance
+[[edge_functions]]
+  function = "auth"
+  path = "/api/auth/*"
